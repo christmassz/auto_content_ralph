@@ -42,20 +42,4 @@ Produce **1–2 WeChat-ready items per day** from manual inputs (Telegram bot + 
 * T13.1 – FYI notification
 
 ---
-### Implementation Tweaks (running log)
-- 2025-09-16: Added Alembic integration to API image; migrations now bundled and run in container.
-- 2025-09-16: Dropped optional `vector` extension to allow base Postgres image.
-- 2025-09-16: Added `fresh_until_ts` column via migration `003_add_fresh_until_ts` to satisfy /ingest/web handler.
-- 2025-09-16: Added `provenance` JSON column via migration `004_add_provenance`.
-- 2025-09-16: Fixed /ingest/web to store payload as JSON string (asyncpg dict error).
-- 2025-09-16: Worker Dockerfile now copies full service code so pipelines (Telegram notify) work.
-- 2025-09-16: Telegram bot credentials & super-group chat ID corrected; FYI test message delivered successfully.
-- 2025-09-17: JWT header fix for /ingest/telegram; now reads Authorization header via Header().
-- 2025-09-17: Store ingest_requests.payload as JSON string to satisfy asyncpg codec.
-- 2025-09-17: BAN_REGEX compile hardened; strips inline (?i) to prevent re.error.
-- 2025-09-17: Stage-1 end-to-end test passed (ingest → process → selector → dry-run export + Telegram FYI).
-- 2025-10-10: Added `/ingest/web/upload:start` presigned upload helper (returns internal media_url and a public presigned URL for host uploads). Bot now uploads TG media to MinIO first and sends media_url in `/ingest/telegram` payload. API `ingest_telegram` records `media_url` and falls back to Telegram download only when needed.
-- 2025-10-10: Gateway (`ops/nginx.conf`) updated to proxy `/api/*` to `api:8000` with prefix strip and Docker DNS resolver; removed unused `/worker/healthz` route.
-- 2025-10-10: Compose cleanup: removed temporary `api-forwarder` and host port 18080; gateway is the canonical entry point for host clients (`http://127.0.0.1/api`).
-
-*Last updated: 2025-09-17*
+*Last updated: 2025-09-09*

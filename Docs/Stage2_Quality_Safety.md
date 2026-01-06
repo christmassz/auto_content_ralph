@@ -71,23 +71,5 @@ Add a lightweight worker step to enrich RSS items that include `links[]` by fetc
 - Env knobs: `OCR_LANG` (e.g., `eng+chi_sim`), `OCR_MAX_CHARS`, `OCR_SUMMARY_LANG`, `OCR_SUMMARY_MAX_CHARS`.
 - No schema change required; media normalization and scoring proceed as before.
 
-### Implementation Tweaks (running log)
-- 2025-09-18: Added detailed Stage 2 checklist; created migration `006_similarity_scoring`; implemented SimHash & pHash computation, similarity & scoring in worker; selector now uses `selector_score` with skip/exclude overrides.
-- 2025-09-18: Added 10-second burst Redis throttle to TG ingest; Stage2 throttle item completed.
-- 2025-10-10: Throttling updated — removed both burst limit and daily per-curator cap for TG ingest during MVP; keep ability to re-enable caps if needed.
-- 2025-10-10: Telegram ingest fixed for timezone-aware timestamps and robust search fallback (ILIKE on subject/raw_text).
-
 ---
-### How to tune Stage-2 parameters
-
-Env vars (in `.env`):
-- `SIMHASH_THRESHOLD` – max Hamming distance considered duplicate (default 3 /64).
-- `PHASH_DISTANCE` – max pHash distance for image near-dup (default 5).
-- `HALF_LIFE_DAILY` etc. – overrides freshness half-life days.
-- `SKIP_TODAY` – set `true` to disable today’s export.
-- `EXCLUDE_IDS` – comma-separated list of content UUIDs to hide.
-
-Config constants live in `services/worker/pipelines/selector.py` and may be tweaked without code rebuild by exporting these vars.
-
----
-*Last updated: 2025-09-18*
+*Last updated: 2025-09-09*

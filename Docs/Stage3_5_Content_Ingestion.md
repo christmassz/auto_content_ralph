@@ -15,12 +15,12 @@ Goal: Make adding content effortless and reliable via auto-inputs and simple con
 - Worker enriches, OCRs, summarizes, scores, and indexes to RAG automatically
 
 ### Operator checklist
-- [ ] Add feeds in `ops/rss_feeds.txt` (one per line, `#` comments allowed)
-- [ ] Set in `.env`: `RSS_FEEDS_FILE=/app/rss_feeds.txt`, `RSS_INTERVAL_SEC=86400`
-- [ ] `./build.sh` or `docker compose up -d rss`
-- [ ] (Optional) Set `FEATURE_LINK_FETCHER=true` to enrich link text
-- [ ] Issue admin token (`/auth/token`) and bot token (`scripts/issue_token.py`)
-- [ ] Verify ingestion end-to-end: RSS → /ingest/web → worker logs → RAG → /search
+- Add feeds in `ops/rss_feeds.txt` (one per line, `#` comments allowed)
+- Set in `.env`: `RSS_FEEDS_FILE=/app/rss_feeds.txt`, `RSS_INTERVAL_SEC=86400`
+- `./build.sh` or `docker compose up -d rss`
+- (Optional) Set `FEATURE_LINK_FETCHER=true` to enrich link text
+- Issue admin token (`/auth/token`) and bot token (`scripts/issue_token.py`)
+- Verify ingestion end-to-end: RSS → /ingest/web → worker logs → RAG → /search
 
 ### Backfill later without re-upload
 - Originals (images/docs) are preserved in MinIO. When new extractors (PDF text, chart digitizer) are added, run a one-time backfill over existing items to enrich `raw_text` (or a new field), then reindex RAG.
